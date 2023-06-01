@@ -1,0 +1,65 @@
+﻿<Window x:Class="VPN.CreaterTom.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VPN.CreaterTom"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="500">
+
+    <Grid UseLayoutRounding="True" Background="AliceBlue">        
+        <Menu Background="#086499" VerticalAlignment="Top" Foreground="AliceBlue" Height="25">
+            <MenuItem Header="Log" Height="25">
+                <MenuItem Header="Открыть" Click="MenuOpenLogFile" Background="#086499" Foreground="AliceBlue"/>
+            </MenuItem>
+            <MenuItem Header="Настройки" Click="MenuOpenSettings"/>
+        </Menu>
+        <GroupBox Header="Копировать:" FontFamily="Arial" VerticalAlignment="Top" Height="83" Width="221" Margin="10,30,0,0" HorizontalAlignment="Left" BorderBrush="#086499">
+            <Grid x:Name="GridCopy" Margin="0,0,-2,0">
+                <TextBox x:Name="TxtListNumber" Height="18" Margin="107,19,2,23" VerticalContentAlignment="Center" IsEnabled="False" BorderBrush="#086499">
+                    <TextBox.Text>
+                        <Binding Path="ListNumber">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBox x:Name="TxtListName" Height="18" Margin="107,37,2,5" VerticalContentAlignment="Center" IsEnabled="False" BorderBrush="#086499">
+                    <TextBox.Text>
+                        <Binding Path="ListName">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <RadioButton x:Name="RbtnAllList" IsChecked="{Binding Path=RbtnAllList}"  Content="все листы" Margin="0,0,121,42" Height="18" Checked="RdBtnAllList_Checked"/>
+                <RadioButton IsChecked="{Binding Path=RbtnListNumber}" Content="лист номер:" Margin="0,19,121,23" Height="18" Checked="RdBtnListNumber_Checked"/>
+                <RadioButton IsChecked="{Binding Path=RbtnAllListName}" Content="лист с именем:" Margin="0,37,108,5" Height="18" Checked="RdBtnListName_Checked"/>
+            </Grid>
+        </GroupBox>
+        <Label Content="Введите название тома:" FontFamily="Arial" VerticalAlignment="Top" Height="25" Margin="244,30,10,0"/>
+        <TextBox FontFamily="Arial" x:Name="TxtNameTom" Height="25" Margin="244,55,10,0" VerticalContentAlignment="Center" VerticalAlignment="Top" BorderBrush="#086499">
+            <TextBox.Text>
+                <Binding Path="NameTom">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Button x:Name="ButtonDeleteRow" FontFamily="Arial" Content="Выполнить" VerticalAlignment="Top" Height="25" Background="#0896fe" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold" Margin="244,88,10,0" Click="BtnCreate_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="2"/>
+                </Style>
+            </Button.Resources>
+            <Button.Effect>
+                <DropShadowEffect Color="Black" Direction="290" ShadowDepth="3" Opacity="0.6"/>
+            </Button.Effect>
+        </Button>
+        <TextBox FontFamily="Arial" x:Name="TxtBlockShow" Margin="10,128,10,30" IsReadOnly="True" Background="White" BorderBrush="#086499"/>
+        <StatusBar VerticalAlignment="Bottom" Height="25" Background="#086499"/>
+    </Grid>
+</Window>
