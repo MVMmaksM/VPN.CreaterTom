@@ -27,6 +27,17 @@ namespace VPN.CreaterTom
             _inputData = new InputModel();
             _fileServices = new FileWorkServices(new WorkFile());
             _setting = _fileServices.GetSetting(pathFileSetting);
+            CreateDirectory(_setting.PathSaveFile);
+            CreateDirectory(_setting.PathLoadFile);
+        }
+
+
+        private void CreateDirectory(string path) 
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }            
         }
 
         public InputModel GetInputData() => _inputData;
@@ -46,7 +57,7 @@ namespace VPN.CreaterTom
         {
             try
             {
-                OnHandlerInfoShow?.Invoke($"Получение файлов из {_setting.PathLoadFile}");
+                OnHandlerInfoShow?.Invoke($"\nПолучение файлов из {_setting.PathLoadFile}");
                 var files = Directory.GetFiles(_setting.PathLoadFile);
                 
                 OnHandlerInfoShow?.Invoke($"\nПолучено файлов: {files.Count()}");

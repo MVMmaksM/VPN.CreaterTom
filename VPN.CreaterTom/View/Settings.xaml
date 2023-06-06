@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VPN.CreaterTom.View"
         mc:Ignorable="d"
-        Title="Настройки" Height="450" Width="500">
+        Title="Настройки" Height="450" Width="500" ResizeMode="NoResize">
     <Grid UseLayoutRounding="True" Background="AliceBlue">
         <StatusBar VerticalAlignment="Bottom" Height="25" Background="#086499"/>
         <Menu Background="#086499" VerticalAlignment="Top" Foreground="AliceBlue" Height="25"/>

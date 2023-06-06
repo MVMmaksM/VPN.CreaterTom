@@ -19,22 +19,32 @@ namespace VPN.CreaterTom.Services
 
         public ISetting GetSetting(string pathFile)
         {
+            if (!File.Exists(pathFile))
+            {
+                var setting = new SettingModel();
+                setting.PathLoadFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Файлы для загрузки");
+                setting.PathSaveFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Том");
+                var settingString = JsonConvert.SerializeObject(setting);
+                var settingBytes = Encoding.UTF8.GetBytes(settingString);
+                SaveSetting(pathFile, settingBytes);
+                return setting;
+            }
             var settingsString = _workFile.ReadFile(pathFile);
             return JsonConvert.DeserializeObject<SettingModel>(settingsString);
         }
 
         public void SaveFile(string pathFileSave, byte[] bytesSettings)
-        {           
-            var parhDirectory = Path.GetDirectoryName(pathFileSave);
+        {
+            var pathDirectory = Path.GetDirectoryName(pathFileSave);
 
-            if (!Directory.Exists(parhDirectory)) 
+            if (!Directory.Exists(pathDirectory))
             {
-                Directory.CreateDirectory(parhDirectory);
+                Directory.CreateDirectory(pathDirectory);
             }
             _workFile.SaveFile(pathFileSave, bytesSettings);
         }
 
-        public void SaveSetting(string pathFileSave, byte[] bytesSettings) 
+        public void SaveSetting(string pathFileSave, byte[] bytesSettings)
         {
             _workFile.SaveFile(pathFileSave, bytesSettings);
         }
