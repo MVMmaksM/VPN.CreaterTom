@@ -13,22 +13,25 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VPN.CreaterTom.Model;
+using VPN.CreaterTom.Services;
+using VPN.CreaterTom.View;
 
 namespace VPN.CreaterTom
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        InputModel model;
+        private Facade facade;
         public MainWindow()
         {
             InitializeComponent();
-            model = new InputModel();
-            this.DataContext = model;
+            facade = new Facade(new MessageService());
+            facade.OnHandlerInfoShow += ShowInfo;
+            this.DataContext = facade.GetInputData();
         }
-
+        private void ShowInfo(string messageInfo) 
+        {
+            TxtBlockShow.Text += messageInfo;
+        }
         private void MenuOpenLogFile(object sender, RoutedEventArgs e)
         {
 
@@ -36,18 +39,20 @@ namespace VPN.CreaterTom
 
         private void MenuOpenSettings(object sender, RoutedEventArgs e)
         {
-
+            Settings settingsWindow = new Settings(facade.GetSettings());
+            settingsWindow.SaveSetting += facade.SaveSettings;
+            settingsWindow.Owner = this;
+            settingsWindow.Show();
         }
 
         private void RdBtnListNumber_Checked(object sender, RoutedEventArgs e)
         {
             TxtListName.IsEnabled = false;
             TxtListNumber.IsEnabled = true;
-            model.RbtnListNumber = true;
 
             if (Validation.GetHasError(TxtListName))
             {
-                model.ListName = default;
+                facade.SetListNameDefault();
             }
         }
 
@@ -55,11 +60,10 @@ namespace VPN.CreaterTom
         {
             TxtListName.IsEnabled = true;
             TxtListNumber.IsEnabled = false;
-            model.RbtnListName = true;
 
             if (Validation.GetHasError(TxtListNumber))
             {
-                model.ListNumber = default;
+                facade.SetListNumberDefault();
             }
         }
 
@@ -67,18 +71,17 @@ namespace VPN.CreaterTom
         {
             TxtListName.IsEnabled = false;
             TxtListNumber.IsEnabled = false;
-            model.RbtnAllList = true;
 
             if ((Validation.GetHasError(TxtListNumber) || Validation.GetHasError(TxtListName)) || (Validation.GetHasError(TxtListNumber) && Validation.GetHasError(TxtListName)))
             {
-                model.ListName = default;
-                model.ListNumber = default;
+                facade.SetListNameDefault();
+                facade.SetListNumberDefault();
             }
         }
 
         private void BtnCreate_Click(object sender, RoutedEventArgs e)
         {
-
+            facade.CreateTom();
         }
     }
 }

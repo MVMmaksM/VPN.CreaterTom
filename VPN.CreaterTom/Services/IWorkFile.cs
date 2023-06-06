@@ -7,9 +7,9 @@ using VPN.CreaterTom.Model;
 
 namespace VPN.CreaterTom.Services
 {
-    public interface IWorkFileSetting 
+    public interface IWorkFile 
     {
-        ISetting ReadFileSetting(string pathFileSetting);
-        void SaveFileSetting(string pathFileSetting, ISetting settings);
+        string ReadFile(string pathFile);
+        void SaveFile(string pathFile, byte[] files);
     }
 }

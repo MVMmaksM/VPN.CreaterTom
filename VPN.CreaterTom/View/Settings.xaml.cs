@@ -11,17 +11,27 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using VPN.CreaterTom.Model;
+using VPN.CreaterTom.Services;
 
 namespace VPN.CreaterTom.View
-{
-    /// <summary>
-    /// Логика взаимодействия для Settings.xaml
-    /// </summary>
+{   
     public partial class Settings : Window
     {
-        public Settings()
+        private ISetting _setting;
+        public delegate void HadlerSaveSetting();
+        public event HadlerSaveSetting SaveSetting;
+        public Settings(ISetting settings)
         {
             InitializeComponent();
+            
+            _setting = settings;
+            this.DataContext = settings;
+        }
+
+        private void BtnSaveSettings_Click(object sender, RoutedEventArgs e)
+        {          
+            SaveSetting?.Invoke();
         }
     }
 }

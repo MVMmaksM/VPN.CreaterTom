@@ -10,8 +10,8 @@ namespace VPN.CreaterTom.Model
 {
     public class SettingModel :INotifyPropertyChanged, ISetting
     {
-        private string _pathLoadFile;
-        private string _pathSaveFile;
+        private string? _pathLoadFile;
+        private string? _pathSaveFile;
 
         public string PathSaveFile
         {

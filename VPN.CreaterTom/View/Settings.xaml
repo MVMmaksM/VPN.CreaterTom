@@ -9,11 +9,11 @@
     <Grid UseLayoutRounding="True" Background="AliceBlue">
         <StatusBar VerticalAlignment="Bottom" Height="25" Background="#086499"/>
         <Menu Background="#086499" VerticalAlignment="Top" Foreground="AliceBlue" Height="25"/>
-        <Label Content="Путь для загрузки файлов:" Height="25" Margin="10,71,327,338"/>
-        <Label Content="Путь для сохранения тома:" Height="25" Margin="10,101,327,308"/>
-        <TextBox Margin="173,71,10,338" RenderTransformOrigin="0.5,0.5" BorderBrush="#086499"/>
-        <TextBox Margin="173,101,10,308" RenderTransformOrigin="0.5,0.5" BorderBrush="#086499"/>
-        <Button x:Name="BtnSaveSettings" Content="сохранить" Margin="130,330,130,69" FontFamily="Arial" Background="#0896fe" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold">
+        <Label Content="Путь для загрузки файлов:" Height="25" Margin="10,71,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="163"/>
+        <Label Content="Путь для сохранения тома:" Height="25" Margin="10,101,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="163"/>
+        <TextBox x:Name="TxtBxPathLoadFile"  Text="{Binding Path = PathLoadFile}"  Margin="173,71,10,0" RenderTransformOrigin="0.5,0.5" BorderBrush="#086499" Height="25" VerticalAlignment="Top"/>
+        <TextBox x:Name="TxtBxPathSaveFile" Text="{Binding Path= PathSaveFile}" Margin="173,101,10,0" RenderTransformOrigin="0.5,0.5" BorderBrush="#086499" Height="25" VerticalAlignment="Top"/>
+        <Button x:Name="BtnSaveSettings" Content="сохранить" Margin="130,330,130,0" FontFamily="Arial" Background="#0896fe" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold" Click="BtnSaveSettings_Click" Height="25" VerticalAlignment="Top">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="2"/>
