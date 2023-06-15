@@ -7,9 +7,11 @@ using VPN.CreaterTom.Model;
 
 namespace VPN.CreaterTom.Services
 {
-    public interface IWorkFile 
+    public interface IWorkFile
     {
         string ReadFile(string pathFile);
         void SaveFile(string pathFile, byte[] files);
+        void DeleteFile(string pathFile);
+        int DeleteFile(string[] pathFiles);
     }
 }

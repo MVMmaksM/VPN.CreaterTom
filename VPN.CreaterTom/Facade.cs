@@ -43,7 +43,7 @@ namespace VPN.CreaterTom
             _logger.Info($"Проверка директории: {_setting.PathLoadFile}");
             CreateDirectory(_setting.PathLoadFile);
         }
-        public string GetVersionAssembly() 
+        public string GetVersionAssembly()
         {
             var assemblyName = Assembly.GetExecutingAssembly().GetName();
             return $"{assemblyName.Name} ver. {assemblyName?.Version?.Major}.{assemblyName?.Version?.Minor} build:{assemblyName?.Version?.Build}";
@@ -102,13 +102,13 @@ namespace VPN.CreaterTom
                 if (_inputData.RbtnListName)
                 {
                     OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] выполнение...");
-                    resultTomBytes = await Task.Run(()=>CreatorTom.CreateTom(files, _inputData.ListName));
+                    resultTomBytes = await Task.Run(() => CreatorTom.CreateTom(files, _inputData.ListName));
                     OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] выполнено!");
                 }
                 else if (_inputData.RbtnListNumber)
                 {
                     OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] выполнение...");
-                    resultTomBytes = await Task.Run(()=>CreatorTom.CreateTom(files, _inputData.ListNumber));
+                    resultTomBytes = await Task.Run(() => CreatorTom.CreateTom(files, _inputData.ListNumber));
                     OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] выполнено!");
                 }
                 else
@@ -134,11 +134,11 @@ namespace VPN.CreaterTom
             {
                 OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] ошибка");
                 _logger.Error($"{ex.Message}\n{ex.StackTrace}");
-               
-                if (_message.ShowError(ex.Message + "\nПодробная информация в log-файле\n\nОткрыть log?")== System.Windows.MessageBoxResult.OK)
+
+                if (_message.ShowError(ex.Message + "\nПодробная информация в log-файле\n\nОткрыть log?") == System.Windows.MessageBoxResult.OK)
                 {
                     Open(pathCurrentLog);
-                } 
+                }
             }
         }
 
@@ -148,6 +148,17 @@ namespace VPN.CreaterTom
             processStartInfo.UseShellExecute = true;
             processStartInfo.FileName = path;
             Process.Start(processStartInfo);
+        }
+
+        public void DeleteAllLog()
+        {
+            if (_message.ShowQuestion("Хотите удалить все log-файлы?") == System.Windows.MessageBoxResult.OK)
+            {
+                var files = Directory.GetFiles(pathFolderLog);
+                var deleteFileCount = _fileServices.DeleteFiles(files);
+                _message.ShowInfo("Логи удалены!");
+                OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] удалено файлов: {deleteFileCount} из {pathFolderLog}");
+            }
         }
     }
 }

@@ -11,5 +11,6 @@ namespace VPN.CreaterTom.Services
     {
         MessageBoxResult ShowError(string message);
         MessageBoxResult ShowInfo(string message);
+        MessageBoxResult ShowQuestion(string message);
     }
 }

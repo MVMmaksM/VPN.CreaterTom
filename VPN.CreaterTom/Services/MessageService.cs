@@ -11,5 +11,6 @@ namespace VPN.CreaterTom.Services
     {
         public MessageBoxResult ShowError(string message) => MessageBox.Show(message, "Ошибка", MessageBoxButton.OKCancel, MessageBoxImage.Error);
         public MessageBoxResult ShowInfo(string message) => MessageBox.Show(message, "Информация", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+        public MessageBoxResult ShowQuestion(string message) => MessageBox.Show(message, "Вопрос", MessageBoxButton.OKCancel, MessageBoxImage.Question);
     }
 }

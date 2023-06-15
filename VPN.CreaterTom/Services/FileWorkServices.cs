@@ -48,5 +48,7 @@ namespace VPN.CreaterTom.Services
         {
             _workFile.SaveFile(pathFileSave, bytesSettings);
         }
+        public void DeleteFile(string pathFile) => _workFile.DeleteFile(pathFile);
+        public int DeleteFiles(string[] pathFiles) => _workFile.DeleteFile(pathFiles);
     }
 }
