@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VPN.CreaterTom"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="500" ResizeMode="NoResize" Loaded="Window_Loaded" Closed="Window_Closed"> 
+        Title="MainWindow" Height="450" Width="500" ResizeMode="NoResize" Loaded="Window_Loaded" Closed="Window_Closed" WindowStartupLocation="CenterScreen"> 
 
     <Grid UseLayoutRounding="True" Background="AliceBlue">        
         <Menu Background="#086499" VerticalAlignment="Top" Foreground="AliceBlue" Height="25">          
