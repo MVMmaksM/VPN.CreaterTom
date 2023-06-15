@@ -22,6 +22,7 @@ namespace VPN.CreaterTom
         private FileWorkServices _fileServices;
         private IMessage _message;
         private string pathFileSetting = Path.Combine(Environment.CurrentDirectory, "appsettings.json");
+        private string pathFileAbout = Path.Combine(Environment.CurrentDirectory, "about.txt");
         private static string pathFolderLog = $"{Environment.CurrentDirectory}\\logs";
         private static string pathCurrentLog = $"{pathFolderLog}\\{DateTime.Now:yyyy-MM-dd}.log";
         public delegate void HandlerInfoShow(string messageInfo);
@@ -34,14 +35,28 @@ namespace VPN.CreaterTom
             _inputData = new InputModel();
             _fileServices = new FileWorkServices(new WorkFile());
 
-            _logger.Info($"Получение настроек: {pathFileSetting}");
-            _setting = _fileServices.GetSetting(pathFileSetting);
+            try
+            {
+                _logger.Info($"Получение настроек: {pathFileSetting}");
+                _setting = _fileServices.GetSetting(pathFileSetting);
 
-            _logger.Info($"Проверка директории: {_setting.PathSaveFile}");
-            CreateDirectory(_setting.PathSaveFile);
+                _logger.Info($"Проверка директории: {_setting.PathSaveFile}");
+                CreateDirectory(_setting.PathSaveFile);
 
-            _logger.Info($"Проверка директории: {_setting.PathLoadFile}");
-            CreateDirectory(_setting.PathLoadFile);
+                _logger.Info($"Проверка директории: {_setting.PathLoadFile}");
+                CreateDirectory(_setting.PathLoadFile);
+
+                _logger.Info($"Проверка файла about: {_setting.PathLoadFile}");
+                CreateAboutFile();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.Message + ex.StackTrace);
+                if (_message.ShowError(ex.Message + "\nПодробная информация в log-файле\n\nОткрыть log?") == System.Windows.MessageBoxResult.OK)
+                {
+                    Open(pathCurrentLog);
+                }
+            }
         }
         public string GetVersionAssembly()
         {
@@ -158,6 +173,37 @@ namespace VPN.CreaterTom
                 var deleteFileCount = _fileServices.DeleteFiles(files);
                 _message.ShowInfo("Логи удалены!");
                 OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] удалено файлов: {deleteFileCount} из {pathFolderLog}");
+            }
+        }
+
+        private void CreateAboutFile()
+        {
+            if (!File.Exists(pathFileAbout))
+            {
+                var bytesFileAbout = Encoding.UTF8.GetBytes(About.GetAboutInfo());
+                _fileServices.SaveFile(pathFileAbout, bytesFileAbout);
+               
+                _logger.Info($"Файл сохранен: {pathFileAbout}");
+            }
+        }
+
+        public void OpenAboutFile() 
+        {
+
+            try
+            {
+                CreateAboutFile();
+                Open(pathFileAbout);
+            }
+            catch (Exception ex)
+            {
+                OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] ошибка");
+                _logger.Error($"{ex.Message}\n{ex.StackTrace}");
+
+                if (_message.ShowError(ex.Message + "\nПодробная информация в log-файле\n\nОткрыть log?") == System.Windows.MessageBoxResult.OK)
+                {
+                    Open(pathCurrentLog);
+                }
             }
         }
     }

@@ -8,13 +8,14 @@
         Title="MainWindow" Height="450" Width="500" ResizeMode="NoResize" Loaded="Window_Loaded" Closed="Window_Closed"> 
 
     <Grid UseLayoutRounding="True" Background="AliceBlue">        
-        <Menu Background="#086499" VerticalAlignment="Top" Foreground="AliceBlue" Height="25">
+        <Menu Background="#086499" VerticalAlignment="Top" Foreground="AliceBlue" Height="25">          
             <MenuItem Header="Log" Height="25">
                 <MenuItem Header="Открыть директорию" Click="MenuOpenLogFolder" Background="#086499" Foreground="AliceBlue"/>
                 <MenuItem Header="Открыть текущий лог" Click="MenuOpenLogFile" Background="#086499" Foreground="AliceBlue"/>
                 <MenuItem Header="Удалить все log-файлы" Click="MenuDeleteAllLogFile" Background="#086499" Foreground="AliceBlue"/>
             </MenuItem>
             <MenuItem Header="Настройки" Click="MenuOpenSettings"/>
+            <MenuItem Header="О программе" Click="MenuOpenAbout"/>
         </Menu>
         <GroupBox Header="Копировать:" FontFamily="Arial" VerticalAlignment="Top" Height="83" Width="221" Margin="10,30,0,0" HorizontalAlignment="Left" BorderBrush="#086499">
             <Grid x:Name="GridCopy" Margin="0,0,-2,0">

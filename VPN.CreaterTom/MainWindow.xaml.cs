@@ -110,5 +110,10 @@ namespace VPN.CreaterTom
         {
             _facade.DeleteAllLog();
         }
+
+        private void MenuOpenAbout(object sender, RoutedEventArgs e)
+        {
+            _facade.OpenAboutFile();
+        }
     }
 }
