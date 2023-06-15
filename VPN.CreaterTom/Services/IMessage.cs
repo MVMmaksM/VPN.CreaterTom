@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace VPN.CreaterTom.Services
 {
     public interface IMessage
     {
-        void ShowError(string message);
-        void ShowInfo(string message);
+        MessageBoxResult ShowError(string message);
+        MessageBoxResult ShowInfo(string message);
     }
 }

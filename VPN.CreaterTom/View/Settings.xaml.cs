@@ -19,12 +19,15 @@ namespace VPN.CreaterTom.View
     public partial class Settings : Window
     {
         private ISetting _setting;
+        private IMessage _message;
         public delegate void HadlerSaveSetting();
         public event HadlerSaveSetting SaveSetting;
-        public Settings(ISetting settings)
+
+        public Settings(ISetting settings, IMessage message)
         {
             InitializeComponent();
             
+            _message = message;
             _setting = settings;
             this.DataContext = settings;
         }
@@ -32,6 +35,7 @@ namespace VPN.CreaterTom.View
         private void BtnSaveSettings_Click(object sender, RoutedEventArgs e)
         {          
             SaveSetting?.Invoke();
+            _message.ShowInfo("Настройки успешно сохранены!");
         }
     }
 }

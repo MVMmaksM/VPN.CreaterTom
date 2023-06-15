@@ -11,7 +11,7 @@ namespace VPN.CreaterTom.Model
     public class InputModel : INotifyPropertyChanged, IDataErrorInfo
     {
         private int? listNumber;
-        private string? listName;
+        private string? listName = "Название листа";
         private string nameTom = "Том";
         private bool rbtnAllList = true;
         private bool rbtnListName;
@@ -35,6 +35,18 @@ namespace VPN.CreaterTom.Model
                     default:
                         break;
                 }
+
+                switch (columnName)
+                {
+                    case "ListName":
+                        if (string.IsNullOrWhiteSpace(ListName))
+                        {
+                            error = "Название листа должно быть заполнено!";
+                        }
+                        break;
+                    default:
+                        break;
+                }               
 
                 return error;
             }

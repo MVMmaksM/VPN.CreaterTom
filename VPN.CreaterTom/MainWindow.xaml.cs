@@ -1,5 +1,7 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +22,20 @@ namespace VPN.CreaterTom
 {
     public partial class MainWindow : Window
     {
-        private Facade facade;
+        private Facade _facade;
+        private static ILogger _logger = LogManager.GetCurrentClassLogger();
+        private static string pathFolderLog = $"{Environment.CurrentDirectory}\\logs";
+        private static string pathCurrentLog = $"{pathFolderLog}\\{DateTime.Now:yyyy-MM-dd}.log";
+        private IMessage _messageSrvices = new MessageService();
         public MainWindow()
         {
+            _logger.Info("Запуск приложения");
+
             InitializeComponent();
-            facade = new Facade(new MessageService());
-            facade.OnHandlerInfoShow += ShowInfo;
-            this.DataContext = facade.GetInputData();
+            _facade = new Facade(_messageSrvices, _logger);
+            this.Title = _facade.GetVersionAssembly();
+            _facade.OnHandlerInfoShow += ShowInfo;
+            this.DataContext = _facade.GetInputData();
         }
         private void ShowInfo(string messageInfo) 
         {
@@ -34,15 +43,12 @@ namespace VPN.CreaterTom
         }
         private void MenuOpenLogFile(object sender, RoutedEventArgs e)
         {
-
+            _facade.Open(pathCurrentLog);
         }
 
         private void MenuOpenSettings(object sender, RoutedEventArgs e)
         {
-            Settings settingsWindow = new Settings(facade.GetSettings());
-            settingsWindow.SaveSetting += facade.SaveSettings;
-            settingsWindow.Owner = this;
-            settingsWindow.Show();
+            _facade.CreateWindowSetting(this);         
         }
 
         private void RdBtnListNumber_Checked(object sender, RoutedEventArgs e)
@@ -52,7 +58,7 @@ namespace VPN.CreaterTom
 
             if (Validation.GetHasError(TxtListName))
             {
-                facade.SetListNameDefault();
+                _facade.SetListNameDefault();
             }
         }
 
@@ -63,7 +69,7 @@ namespace VPN.CreaterTom
 
             if (Validation.GetHasError(TxtListNumber))
             {
-                facade.SetListNumberDefault();
+                _facade.SetListNumberDefault();
             }
         }
 
@@ -74,14 +80,30 @@ namespace VPN.CreaterTom
 
             if ((Validation.GetHasError(TxtListNumber) || Validation.GetHasError(TxtListName)) || (Validation.GetHasError(TxtListNumber) && Validation.GetHasError(TxtListName)))
             {
-                facade.SetListNameDefault();
-                facade.SetListNumberDefault();
+                _facade.SetListNameDefault();
+                _facade.SetListNumberDefault();
             }
         }
 
         private void BtnCreate_Click(object sender, RoutedEventArgs e)
         {
-            facade.CreateTom();
+            if (!Validation.GetHasError(TxtListNumber) && !Validation.GetHasError(TxtListName) && !Validation.GetHasError(TxtNameTom))
+                _facade.CreateTom();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _logger.Info("Завершение приложения");
+        }
+
+        private void MenuOpenLogFolder(object sender, RoutedEventArgs e)
+        {
+            _facade.Open(pathFolderLog);
         }
     }
 }

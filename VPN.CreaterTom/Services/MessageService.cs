@@ -8,15 +8,8 @@ using System.Windows;
 namespace VPN.CreaterTom.Services
 {
     public class MessageService : IMessage
-    {      
-        public void ShowError(string message)
-        {
-           MessageBox.Show(message, "Ошибка", MessageBoxButton.OKCancel, MessageBoxImage.Error);
-        }
-
-        public void ShowInfo(string message)
-        {
-            MessageBox.Show(message, "Информация", MessageBoxButton.OKCancel, MessageBoxImage.Information);
-        }
+    {
+        public MessageBoxResult ShowError(string message) => MessageBox.Show(message, "Ошибка", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+        public MessageBoxResult ShowInfo(string message) => MessageBox.Show(message, "Информация", MessageBoxButton.OKCancel, MessageBoxImage.Information);
     }
 }

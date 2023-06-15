@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VPN.CreaterTom"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="500" ResizeMode="NoResize"> 
+        Title="MainWindow" Height="450" Width="500" ResizeMode="NoResize" Loaded="Window_Loaded" Closed="Window_Closed"> 
 
     <Grid UseLayoutRounding="True" Background="AliceBlue">        
         <Menu Background="#086499" VerticalAlignment="Top" Foreground="AliceBlue" Height="25">
             <MenuItem Header="Log" Height="25">
-                <MenuItem Header="Открыть" Click="MenuOpenLogFile" Background="#086499" Foreground="AliceBlue"/>
+                <MenuItem Header="Открыть директорию" Click="MenuOpenLogFolder" Background="#086499" Foreground="AliceBlue"/>
+                <MenuItem Header="Открыть текущий лог" Click="MenuOpenLogFile" Background="#086499" Foreground="AliceBlue"/>
+                <MenuItem Header="Удалить все log-файлы" Click="MenuDeleteAllLogFile" Background="#086499" Foreground="AliceBlue"/>
             </MenuItem>
             <MenuItem Header="Настройки" Click="MenuOpenSettings"/>
         </Menu>
@@ -36,7 +38,7 @@
                 </TextBox>
                 <RadioButton x:Name="RbtnAllList" IsChecked="{Binding Path=RbtnAllList}"  Content="все листы" Margin="0,0,121,42" Height="18" Checked="RdBtnAllList_Checked"/>
                 <RadioButton IsChecked="{Binding Path=RbtnListNumber}" Content="лист номер:" Margin="0,19,121,23" Height="18" Checked="RdBtnListNumber_Checked"/>
-                <RadioButton IsChecked="{Binding Path=RbtnAllListName}" Content="лист с именем:" Margin="0,37,108,5" Height="18" Checked="RdBtnListName_Checked"/>
+                <RadioButton IsChecked="{Binding Path=RbtnListName}" Content="лист с именем:" Margin="0,37,108,5" Height="18" Checked="RdBtnListName_Checked"/>
             </Grid>
         </GroupBox>
         <Label Content="Введите название тома:" FontFamily="Arial" VerticalAlignment="Top" Height="25" Margin="244,30,10,0"/>
