@@ -159,10 +159,23 @@ namespace VPN.CreaterTom
 
         public void Open(string path)
         {
-            ProcessStartInfo processStartInfo = new ProcessStartInfo();
-            processStartInfo.UseShellExecute = true;
-            processStartInfo.FileName = path;
-            Process.Start(processStartInfo);
+            try
+            {
+                ProcessStartInfo processStartInfo = new ProcessStartInfo();
+                processStartInfo.UseShellExecute = true;
+                processStartInfo.FileName = path;
+                Process.Start(processStartInfo);
+            }
+            catch (Exception ex)
+            {
+                OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] ошибка");
+                _logger.Error($"{ex.Message}\n{ex.StackTrace}");
+
+                if (_message.ShowError(ex.Message + "\nПодробная информация в log-файле\n\nОткрыть log?") == System.Windows.MessageBoxResult.OK)
+                {
+                    Open(pathCurrentLog);
+                }
+            }
         }
 
         public void DeleteAllLog()

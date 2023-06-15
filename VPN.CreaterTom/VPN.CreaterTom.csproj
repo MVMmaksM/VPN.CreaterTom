@@ -8,17 +8,26 @@
     <Deterministic>false</Deterministic>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <ApplicationIcon>Images\logo (2).ico</ApplicationIcon>
+    <UserSecretsId>7853616c-8528-4e3f-9d13-e7839f15aa71</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="C:\Users\p45_VaganovMV\.nuget\packages\nlog.config\4.7.15\contentFiles\any\any\NLog.config" />
+    <None Remove="NLog.config" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Images\logo (2).ico" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="6.2.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NLog" Version="5.2.0" />
-    <PackageReference Include="NLog.Config" Version="4.7.15" />
     <PackageReference Include="NLog.Schema" Version="5.2.0" />
   </ItemGroup>
 
