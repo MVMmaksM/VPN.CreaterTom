@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:VPN.CreaterTom"
         mc:Ignorable="d"
-        Title="MainWindow" Height="520" Width="604" ResizeMode="NoResize" Loaded="Window_Loaded" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="645" Width="682" ResizeMode="NoResize" Loaded="Window_Loaded" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
 
     <Grid UseLayoutRounding="True" Background="AliceBlue">
         <Menu Background="#086499" VerticalAlignment="Top" Foreground="AliceBlue" Height="25">
@@ -63,11 +63,11 @@
                 <DropShadowEffect Color="Black" Direction="290" ShadowDepth="3" Opacity="0.6"/>
             </Button.Effect>
         </Button>
-        <TextBox FontFamily="Arial" x:Name="TxtBlockShow" Margin="10,217,10,30" IsReadOnly="True" Background="White" BorderBrush="#086499" VerticalScrollBarVisibility="Auto" TextWrapping="WrapWithOverflow"/>
+        <TextBox FontFamily="Arial" x:Name="TxtBlockShow" Margin="10,270,10,30" IsReadOnly="True" Background="White" BorderBrush="#086499" VerticalScrollBarVisibility="Auto" TextWrapping="WrapWithOverflow"/>
         <StatusBar VerticalAlignment="Bottom" Height="25" Background="#086499"/>
-        <GroupBox Header="Настройки листа" FontFamily="Arial" Margin="10,118,10,0" BorderBrush="#086499" Height="94" VerticalAlignment="Top">
+        <GroupBox Header="Настройки" FontFamily="Arial" Margin="10,118,10,0" BorderBrush="#086499" Height="147" VerticalAlignment="Top">
             <Grid>
-                <Label Content="Поля:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="41"/>
+                <Label Content="Поля листа:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="82"/>
                 <Label Content="левое:" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="53"/>
                 <xctk:DecimalUpDown x:Name="UpDownFieldLeftMargin"  Height="20" Value="{Binding Path=LeftMargin}" FormatString="C1" Minimum="0" Increment=".1" 
                                     Maximum="15" Width="42" Margin="49,22,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
@@ -84,16 +84,20 @@
                 <xctk:DecimalUpDown x:Name="UpDownFieldBottomMargin" Height="20" Value="{Binding Path=BottomMargin}" FormatString="C1" Minimum="0" Increment=".1" 
                     Maximum="15" Width="42" Margin="183,44,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                 <Label Content="см" HorizontalAlignment="Left" Margin="223,40,0,0" VerticalAlignment="Top" Width="26"/>
-                <Label Content="Ориентация:" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="256,0,0,0" VerticalAlignment="Top" Width="95"/>
+                <Label Content="Ориентация листа:" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalAlignment="Top" Width="122" Margin="287,0,0,0"/>
                 <ComboBox HorizontalAlignment="Left" ItemsSource="{Binding Path=SheetOrientation}" SelectedValue="{Binding Path=SelectedValueOrientation}" DisplayMemberPath="nameOrientation" 
-                          Margin="256,24,0,0" VerticalAlignment="Top" Width="95"/>
-                <Label Content="Разместить не более чем на:" HorizontalAlignment="Left" Margin="384,0,0,0" VerticalAlignment="Top" Width="171"/>
+                          Margin="288,24,0,0" VerticalAlignment="Top" Width="121"/>
+                <Label Content="Разместить не более чем на:" HorizontalAlignment="Left" Margin="442,0,0,0" VerticalAlignment="Top" Width="171"/>
                 <xctk:IntegerUpDown x:Name="UpDownFitToWidth" Height="20" Value="{Binding Path=FitToWidth}" FormatString="N0" Minimum="0" Increment="1" 
-                    Maximum="50" Width="42" Margin="384,24,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                <Label Content="стр. в ширину" HorizontalAlignment="Left" Margin="431,20,0,0" VerticalAlignment="Top" Width="91"/>
+                    Maximum="50" Width="42" Margin="455,22,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <Label Content="стр. в ширину" HorizontalAlignment="Left" Margin="503,20,0,0" VerticalAlignment="Top" Width="90"/>
                 <xctk:IntegerUpDown x:Name="UpDownFitToHeight" Height="20" Value="{Binding Path=FitToHeight}" FormatString="N0" Minimum="0" Increment="1" 
-                     Maximum="50" Width="42" Margin="384,46,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                <Label Content="стр. в высоту" HorizontalAlignment="Left" Margin="431,42,0,0" VerticalAlignment="Top" Width="91"/>
+                     Maximum="50" Width="42" Margin="455,46,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <Label Content="стр. в высоту" HorizontalAlignment="Left" Margin="502,44,0,0" VerticalAlignment="Top" Width="91"/>
+                <CheckBox x:Name="IsNameFileAsNameSheet" IsChecked="{Binding Path=IsNameFileAsNameSheet}" 
+                          Content="использовать терсон из название файла как название листа" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top"/>
+                <CheckBox x:Name="IsAddZeroTersonInNameFile" IsChecked="{Binding Path=IsAddZeroTersonInNameFile}" Content="добавить недостающие нули в терсон имен файлов" HorizontalAlignment="Left" Margin="10,103,0,0" 
+                          VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>
     </Grid>

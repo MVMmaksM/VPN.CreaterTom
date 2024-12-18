@@ -63,7 +63,7 @@ namespace VPN.CreaterTom.Services
                         .Where(n => n.StartsWith("Терр="))
                         .FirstOrDefault();                 
 
-                    if (terr.Length < 16)
+                    if (terr is not null && terr.Length < 16)
                     {
                         var newNameFile = files[i].Replace(terr, terr + "000");
                         _workFile.RenameFile(files[i], newNameFile);

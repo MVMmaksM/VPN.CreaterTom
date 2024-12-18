@@ -23,24 +23,49 @@ namespace VPN.CreaterTom
             {
                 var package = new ExcelPackage(files[i]);
 
-                foreach (var sheet in package.Workbook.Worksheets)
+                for (int j = 0; j < package.Workbook.Worksheets.Count; j++)
                 {
                     //настройки листа
                     //поля
-                    sheet.PrinterSettings.LeftMargin = inputData.LeftMargin / 2.54M;
-                    sheet.PrinterSettings.RightMargin = inputData.RightMargin / 2.54M;
-                    sheet.PrinterSettings.TopMargin = inputData.TopMargin / 2.54M;
-                    sheet.PrinterSettings.BottomMargin = inputData.BottomMargin / 2.54M;
+                    package.Workbook.Worksheets[j].PrinterSettings.LeftMargin = inputData.LeftMargin / 2.54M;
+                    package.Workbook.Worksheets[j].PrinterSettings.RightMargin = inputData.RightMargin / 2.54M;
+                    package.Workbook.Worksheets[j].PrinterSettings.TopMargin = inputData.TopMargin / 2.54M;
+                    package.Workbook.Worksheets[j].PrinterSettings.BottomMargin = inputData.BottomMargin / 2.54M;
                     //ориентация
-                    sheet.PrinterSettings.Orientation = inputData.SelectedValueOrientation.orientation;
+                    package.Workbook.Worksheets[j].PrinterSettings.Orientation = inputData.SelectedValueOrientation.orientation;
                     //вписать в кол-во страниц
-                    sheet.PrinterSettings.FitToPage = true;
-                    sheet.PrinterSettings.FitToWidth = inputData.FitToWidth;
-                    sheet.PrinterSettings.FitToHeight = inputData.FitToHeight;
+                    package.Workbook.Worksheets[j].PrinterSettings.FitToPage = true;
+                    package.Workbook.Worksheets[j].PrinterSettings.FitToWidth = inputData.FitToWidth;
+                    package.Workbook.Worksheets[j].PrinterSettings.FitToHeight = inputData.FitToHeight;
                     //добавляем лист в книгу
-                    //packageTom.Workbook.Worksheets.Add($"{sheet.Name}({i})", sheet);
-                    packageTom.Workbook.Worksheets.Add($"{sheet.Name}({i})", sheet);
-                }
+                 
+                    if (inputData.IsNameFileAsNameSheet)
+                    {
+                        var nameFile = Path
+                            .GetFileNameWithoutExtension(files[i])
+                            .Split("_")
+                            .Where(n => n.StartsWith("Терр="))
+                            .FirstOrDefault();
+
+                        if (nameFile is null)
+                            throw new Exception($"В названии файла: {files[i]} отсутствует подстрока вида Терр=");
+
+                        var terson = nameFile.Split("=");
+
+                        if (package.Workbook.Worksheets.Count > 1)                       
+                        {
+                            packageTom.Workbook.Worksheets.Add($"{terson[1] ?? "Неизвестно"}({j})", package.Workbook.Worksheets[j]);
+                        }
+                        else
+                        {
+                            packageTom.Workbook.Worksheets.Add($"{terson[1] ?? "Неизвестно"}", package.Workbook.Worksheets[j]);
+                        }
+                    }
+                    else 
+                    {
+                        packageTom.Workbook.Worksheets.Add($"{package.Workbook.Worksheets[j].Name}({i})", package.Workbook.Worksheets[j]);
+                    }                    
+                }                
             }
 
             return packageTom.GetAsByteArray();
@@ -76,8 +101,28 @@ namespace VPN.CreaterTom
                 sheet.PrinterSettings.FitToPage = true;
                 sheet.PrinterSettings.FitToWidth = inputData.FitToWidth;
                 sheet.PrinterSettings.FitToHeight = inputData.FitToHeight;
-                //добавляем лист в книгу
-                packageTom.Workbook.Worksheets.Add($"{sheet.Name}({i})", sheet);
+
+                //если используется название файла в названии листа
+                if (inputData.IsNameFileAsNameSheet)
+                {
+                    var nameFile = Path
+                            .GetFileNameWithoutExtension(files[i])
+                            .Split("_")
+                            .Where(n => n.StartsWith("Терр="))
+                            .FirstOrDefault();
+
+                    if (nameFile is null)
+                        throw new Exception($"В названии файла: {files[i]} отсутствует подстрока вида Терр=");
+
+                    var terson = nameFile.Split("=");
+
+                    packageTom.Workbook.Worksheets.Add($"{terson[1]}", sheet);
+                }
+                else 
+                {
+                    //добавляем лист в книгу
+                    packageTom.Workbook.Worksheets.Add($"{sheet.Name}({i})", sheet);
+                }
             }
 
             return packageTom.GetAsByteArray();
@@ -111,8 +156,28 @@ namespace VPN.CreaterTom
                 sheet.PrinterSettings.FitToPage = true;
                 sheet.PrinterSettings.FitToWidth = inputData.FitToWidth;
                 sheet.PrinterSettings.FitToHeight = inputData.FitToHeight;
-                //добавляем лист в книгу
-                packageTom.Workbook.Worksheets.Add($"{sheet.Name}({i})", sheet);
+
+                //если используется название файла в названии листа
+                if (inputData.IsNameFileAsNameSheet)
+                {
+                    var nameFile = Path
+                            .GetFileNameWithoutExtension(files[i])
+                            .Split("_")
+                            .Where(n => n.StartsWith("Терр="))
+                            .FirstOrDefault();
+
+                    if (nameFile is null)
+                        throw new Exception($"В названии файла: {files[i]} отсутствует подстрока вида Терр=");
+
+                    var terson = nameFile.Split("=");
+
+                    packageTom.Workbook.Worksheets.Add($"{terson[1]}", sheet);
+                }
+                else
+                {
+                    //добавляем лист в книгу
+                    packageTom.Workbook.Worksheets.Add($"{sheet.Name}({i})", sheet);
+                }
             }
 
             return packageTom.GetAsByteArray();

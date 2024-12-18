@@ -105,7 +105,22 @@ namespace VPN.CreaterTom
                 var files = Directory.GetFiles(_setting.PathLoadFile);
                 OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] получено файлов: {files.Count()}");
 
-                _fileServices.RenameFiles(files);
+                if (files.Length < 2) 
+                {
+                    _message.ShowError($"Файлов для загрузи должно быть больше 1");
+                    return;
+                }
+
+                //если нужно добавить нули в терсон имени файла для сортировки
+                if (_inputData.IsAddZeroTersonInNameFile) 
+                {
+                    //переименовываем файлы, у которых терсон меньше 11 знаков 
+                    _fileServices.RenameFiles(files);
+                    //получаем еще раз список файлов, уже переименованных
+                    files = Directory.GetFiles(_setting.PathLoadFile)
+                        .OrderBy(f => f)
+                        .ToArray();
+                }                
 
                 byte[] resultTomBytes = default;
 

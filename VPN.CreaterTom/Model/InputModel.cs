@@ -11,6 +11,8 @@ namespace VPN.CreaterTom.Model
 {
     public class InputModel : INotifyPropertyChanged, IDataErrorInfo
     {
+        private bool _isAddZeroTersonInNameFile;      
+        private bool _isNameFileAsNameSheet;     
         private int _fitToWidth;
         private int _fitToHeight;
         private int? listNumber;
@@ -80,7 +82,17 @@ namespace VPN.CreaterTom.Model
                 return error;
             }
         }
+        public bool IsAddZeroTersonInNameFile
+        {
+            get =>_isAddZeroTersonInNameFile; 
+            set => _isAddZeroTersonInNameFile = value; 
+        }
 
+        public bool IsNameFileAsNameSheet
+        {
+            get => _isNameFileAsNameSheet; 
+            set => _isNameFileAsNameSheet = value; 
+        }
         public int FitToWidth
         {
             get { return _fitToWidth; }
