@@ -43,5 +43,7 @@ namespace VPN.CreaterTom.Services
         {          
             File.WriteAllBytes(pathFile, files);
         }
+
+        public void RenameFile(string oldNameFile, string newNameFile) => File.Move(oldNameFile, newNameFile);        
     }
 }

@@ -103,8 +103,9 @@ namespace VPN.CreaterTom
                 _logger.Info($"Получение файлов из {_setting.PathLoadFile}");
 
                 var files = Directory.GetFiles(_setting.PathLoadFile);
-
                 OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] получено файлов: {files.Count()}");
+
+                _fileServices.RenameFiles(files);
 
                 byte[] resultTomBytes = default;
 

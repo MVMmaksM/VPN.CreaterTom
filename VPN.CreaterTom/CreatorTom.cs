@@ -26,11 +26,19 @@ namespace VPN.CreaterTom
                 foreach (var sheet in package.Workbook.Worksheets)
                 {
                     //настройки листа
+                    //поля
                     sheet.PrinterSettings.LeftMargin = inputData.LeftMargin / 2.54M;
                     sheet.PrinterSettings.RightMargin = inputData.RightMargin / 2.54M;
                     sheet.PrinterSettings.TopMargin = inputData.TopMargin / 2.54M;
                     sheet.PrinterSettings.BottomMargin = inputData.BottomMargin / 2.54M;
-
+                    //ориентация
+                    sheet.PrinterSettings.Orientation = inputData.SelectedValueOrientation.orientation;
+                    //вписать в кол-во страниц
+                    sheet.PrinterSettings.FitToPage = true;
+                    sheet.PrinterSettings.FitToWidth = inputData.FitToWidth;
+                    sheet.PrinterSettings.FitToHeight = inputData.FitToHeight;
+                    //добавляем лист в книгу
+                    //packageTom.Workbook.Worksheets.Add($"{sheet.Name}({i})", sheet);
                     packageTom.Workbook.Worksheets.Add($"{sheet.Name}({i})", sheet);
                 }
             }
@@ -57,11 +65,18 @@ namespace VPN.CreaterTom
 
                 var sheet = package.Workbook.Worksheets[(int)numberList];
                 //настройки листа
+                //поля
                 sheet.PrinterSettings.LeftMargin = inputData.LeftMargin / 2.54M;
                 sheet.PrinterSettings.RightMargin = inputData.RightMargin / 2.54M;
                 sheet.PrinterSettings.TopMargin = inputData.TopMargin / 2.54M;
                 sheet.PrinterSettings.BottomMargin = inputData.BottomMargin / 2.54M;
-
+                //ориентация
+                sheet.PrinterSettings.Orientation = inputData.SelectedValueOrientation.orientation;
+                //вписать в кол-во страниц
+                sheet.PrinterSettings.FitToPage = true;
+                sheet.PrinterSettings.FitToWidth = inputData.FitToWidth;
+                sheet.PrinterSettings.FitToHeight = inputData.FitToHeight;
+                //добавляем лист в книгу
                 packageTom.Workbook.Worksheets.Add($"{sheet.Name}({i})", sheet);
             }
 
@@ -85,11 +100,18 @@ namespace VPN.CreaterTom
 
                 var sheet = package.Workbook.Worksheets[nameList];
                 //настройки листа
+                //поля
                 sheet.PrinterSettings.LeftMargin = inputData.LeftMargin / 2.54M;
                 sheet.PrinterSettings.RightMargin = inputData.RightMargin / 2.54M;
                 sheet.PrinterSettings.TopMargin = inputData.TopMargin / 2.54M;
                 sheet.PrinterSettings.BottomMargin = inputData.BottomMargin / 2.54M;
-
+                //ориентация
+                sheet.PrinterSettings.Orientation = inputData.SelectedValueOrientation.orientation;
+                //вписать в кол-во страниц
+                sheet.PrinterSettings.FitToPage = true;
+                sheet.PrinterSettings.FitToWidth = inputData.FitToWidth;
+                sheet.PrinterSettings.FitToHeight = inputData.FitToHeight;
+                //добавляем лист в книгу
                 packageTom.Workbook.Worksheets.Add($"{sheet.Name}({i})", sheet);
             }
 

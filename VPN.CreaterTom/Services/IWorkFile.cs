@@ -13,5 +13,6 @@ namespace VPN.CreaterTom.Services
         void SaveFile(string pathFile, byte[] files);
         void DeleteFile(string pathFile);
         int DeleteFile(string[] pathFiles);
+        void RenameFile(string oldNameFile, string newNameFile);
     }
 }

@@ -18,7 +18,7 @@ namespace VPN.CreaterTom.Services
         }
 
         public ISetting GetSetting(string pathFile)
-        {
+        {            
             if (!File.Exists(pathFile))
             {
                 var setting = new SettingModel();
@@ -49,6 +49,28 @@ namespace VPN.CreaterTom.Services
             _workFile.SaveFile(pathFileSave, bytesSettings);
         }
         public void DeleteFile(string pathFile) => _workFile.DeleteFile(pathFile);
-        public int DeleteFiles(string[] pathFiles) => _workFile.DeleteFile(pathFiles);      
+        public int DeleteFiles(string[] pathFiles) => _workFile.DeleteFile(pathFiles);
+
+        public int RenameFiles(string[] files) 
+        {
+            for (int i = 0; i < files.Length; i++) 
+            {
+                var splitNameFile = files[i].Split("_");
+
+                if (splitNameFile.Length > 0) 
+                {
+                    var terr = splitNameFile
+                        .Where(n => n.StartsWith("Терр="))
+                        .FirstOrDefault();                 
+
+                    if (terr.Length < 16)
+                    {
+                        var newNameFile = files[i].Replace(terr, terr + "000");
+                        _workFile.RenameFile(files[i], newNameFile);
+                    }
+                }
+            }
+            return 0;
+        }
     }
 }

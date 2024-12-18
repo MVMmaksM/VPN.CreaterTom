@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace VPN.CreaterTom.Model
 {
     public class InputModel : INotifyPropertyChanged, IDataErrorInfo
     {
+        private int _fitToWidth;
+        private int _fitToHeight;
         private int? listNumber;
         private string? listName = "Название листа";
         private string nameTom = "Том";
@@ -18,8 +21,30 @@ namespace VPN.CreaterTom.Model
         private bool rbtnListNumber;
         private decimal leftMargin = 1.8M;
         private decimal rightMargin = 1.8M;
-        private decimal topMargin = 1.8M;
-        private decimal bottomMargin = 1.8M;
+        private decimal topMargin = 2.0M;
+        private decimal bottomMargin = 2.0M;
+        private List<ExcelSheetOrientation> _listOrientation = new List<ExcelSheetOrientation>()
+        {
+            new ExcelSheetOrientation()
+            {
+                nameOrientation = "Книжная",
+                orientation = eOrientation.Portrait
+            },
+            new ExcelSheetOrientation()
+            {
+                nameOrientation = "Альбомная",
+                orientation = eOrientation.Landscape
+            }
+        };
+        private ExcelSheetOrientation _selectedValueOrientation;
+
+        public ExcelSheetOrientation SelectedValueOrientation
+        {
+            get { return _selectedValueOrientation ?? _listOrientation[1]; }
+            set { _selectedValueOrientation = value; }
+        }
+
+        public List<ExcelSheetOrientation> SheetOrientation { get => _listOrientation; }
 
         public string Error => throw new NotImplementedException();
         public string this[string columnName] 
@@ -56,6 +81,26 @@ namespace VPN.CreaterTom.Model
             }
         }
 
+        public int FitToWidth
+        {
+            get { return _fitToWidth; }
+            set
+            {
+                _fitToWidth = value;
+                OnPropertyChanged("FitToWidth");
+            }
+        }
+
+        public int FitToHeight
+        {
+            get { return _fitToHeight; }
+            set
+            {
+                _fitToHeight = value;
+                OnPropertyChanged("FitToHeight");
+            }
+        }
+
         public bool RbtnListNumber
         {
             get { return rbtnListNumber; }
@@ -65,7 +110,6 @@ namespace VPN.CreaterTom.Model
                 OnPropertyChanged("RbtnListNumber");
             }
         }
-
 
         public bool RbtnListName
         {

@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:VPN.CreaterTom"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="500" ResizeMode="NoResize" Loaded="Window_Loaded" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="520" Width="604" ResizeMode="NoResize" Loaded="Window_Loaded" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
 
     <Grid UseLayoutRounding="True" Background="AliceBlue">
         <Menu Background="#086499" VerticalAlignment="Top" Foreground="AliceBlue" Height="25">
@@ -18,7 +18,7 @@
             <MenuItem Header="Настройки" Click="MenuOpenSettings"/>
             <MenuItem Header="О программе" Click="MenuOpenAbout"/>
         </Menu>
-        <GroupBox Header="Копировать:" FontFamily="Arial" VerticalAlignment="Top" Height="83" Width="221" Margin="10,30,0,0" HorizontalAlignment="Left" BorderBrush="#086499">
+        <GroupBox Header="Копировать:" FontFamily="Arial" VerticalAlignment="Top" Height="83" Width="268" Margin="10,30,0,0" HorizontalAlignment="Left" BorderBrush="#086499">
             <Grid x:Name="GridCopy" Margin="0,0,-2,0">
                 <TextBox x:Name="TxtListNumber" Height="18" Margin="108,15,1,29" VerticalContentAlignment="Center" IsEnabled="False" BorderBrush="#086499">
                     <TextBox.Text>
@@ -43,8 +43,8 @@
                 <RadioButton IsChecked="{Binding Path=RbtnListName}" Content="лист с именем:" Margin="0,37,108,5" Height="18" Checked="RdBtnListName_Checked"/>
             </Grid>
         </GroupBox>
-        <Label Content="Введите название тома:" FontFamily="Arial" VerticalAlignment="Top" Height="25" Margin="244,30,10,0"/>
-        <TextBox FontFamily="Arial" x:Name="TxtNameTom" Height="25" Margin="244,55,10,0" VerticalContentAlignment="Center" VerticalAlignment="Top" BorderBrush="#086499">
+        <Label Content="Введите название тома:" FontFamily="Arial" VerticalAlignment="Top" Height="25" Margin="297,30,10,0"/>
+        <TextBox FontFamily="Arial" x:Name="TxtNameTom" Height="25" Margin="297,55,10,0" VerticalContentAlignment="Center" VerticalAlignment="Top" BorderBrush="#086499">
             <TextBox.Text>
                 <Binding Path="NameTom">
                     <Binding.ValidationRules>
@@ -53,7 +53,7 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
-        <Button x:Name="ButtonDeleteRow" FontFamily="Arial" Content="Выполнить" VerticalAlignment="Top" Height="25" Background="#0896fe" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold" Margin="244,88,10,0" Click="BtnCreate_Click">
+        <Button x:Name="ButtonDeleteRow" FontFamily="Arial" Content="Выполнить" VerticalAlignment="Top" Height="25" Background="#0896fe" Foreground="WhiteSmoke" BorderBrush="#086499" FontWeight="Bold" Margin="297,88,10,0" Click="BtnCreate_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="2"/>
@@ -84,7 +84,16 @@
                 <xctk:DecimalUpDown x:Name="UpDownFieldBottomMargin" Height="20" Value="{Binding Path=BottomMargin}" FormatString="C1" Minimum="0" Increment=".1" 
                     Maximum="15" Width="42" Margin="183,44,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                 <Label Content="см" HorizontalAlignment="Left" Margin="223,40,0,0" VerticalAlignment="Top" Width="26"/>
-
+                <Label Content="Ориентация:" HorizontalAlignment="Left" HorizontalContentAlignment="Center" Margin="256,0,0,0" VerticalAlignment="Top" Width="95"/>
+                <ComboBox HorizontalAlignment="Left" ItemsSource="{Binding Path=SheetOrientation}" SelectedValue="{Binding Path=SelectedValueOrientation}" DisplayMemberPath="nameOrientation" 
+                          Margin="256,24,0,0" VerticalAlignment="Top" Width="95"/>
+                <Label Content="Разместить не более чем на:" HorizontalAlignment="Left" Margin="384,0,0,0" VerticalAlignment="Top" Width="171"/>
+                <xctk:IntegerUpDown x:Name="UpDownFitToWidth" Height="20" Value="{Binding Path=FitToWidth}" FormatString="N0" Minimum="0" Increment="1" 
+                    Maximum="50" Width="42" Margin="384,24,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <Label Content="стр. в ширину" HorizontalAlignment="Left" Margin="431,20,0,0" VerticalAlignment="Top" Width="91"/>
+                <xctk:IntegerUpDown x:Name="UpDownFitToHeight" Height="20" Value="{Binding Path=FitToHeight}" FormatString="N0" Minimum="0" Increment="1" 
+                     Maximum="50" Width="42" Margin="384,46,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <Label Content="стр. в высоту" HorizontalAlignment="Left" Margin="431,42,0,0" VerticalAlignment="Top" Width="91"/>
             </Grid>
         </GroupBox>
     </Grid>
