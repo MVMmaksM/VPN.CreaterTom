@@ -117,19 +117,19 @@ namespace VPN.CreaterTom
                 if (_inputData.RbtnListName)
                 {
                     OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] выполнение...");
-                    resultTomBytes = await Task.Run(() => CreatorTom.CreateTom(files, _inputData.ListName));
+                    resultTomBytes = await Task.Run(() => CreatorTom.CreateTom(files, _inputData.ListName, _inputData));
                     OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] выполнено!");
                 }
                 else if (_inputData.RbtnListNumber)
                 {
                     OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] выполнение...");
-                    resultTomBytes = await Task.Run(() => CreatorTom.CreateTom(files, _inputData.ListNumber));
+                    resultTomBytes = await Task.Run(() => CreatorTom.CreateTom(files, _inputData.ListNumber, _inputData));
                     OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] выполнено!");
                 }
                 else
                 {
                     OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] выполнение...");
-                    resultTomBytes = await Task.Run(() => CreatorTom.CreateTom(files));
+                    resultTomBytes = await Task.Run(() => CreatorTom.CreateTom(files, _inputData));
                     OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] выполнено!");
                 }
 

@@ -6,12 +6,13 @@ using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VPN.CreaterTom.Model;
 
 namespace VPN.CreaterTom
 {
     public class CreatorTom
     {
-        public static byte[] CreateTom(string[] files)
+        public static byte[] CreateTom(string[] files, InputModel inputData)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
@@ -24,6 +25,12 @@ namespace VPN.CreaterTom
 
                 foreach (var sheet in package.Workbook.Worksheets)
                 {
+                    //настройки листа
+                    sheet.PrinterSettings.LeftMargin = inputData.LeftMargin / 2.54M;
+                    sheet.PrinterSettings.RightMargin = inputData.RightMargin / 2.54M;
+                    sheet.PrinterSettings.TopMargin = inputData.TopMargin / 2.54M;
+                    sheet.PrinterSettings.BottomMargin = inputData.BottomMargin / 2.54M;
+
                     packageTom.Workbook.Worksheets.Add($"{sheet.Name}({i})", sheet);
                 }
             }
@@ -31,7 +38,7 @@ namespace VPN.CreaterTom
             return packageTom.GetAsByteArray();
         }
 
-        public static byte[] CreateTom(string[] files, int? numberList)
+        public static byte[] CreateTom(string[] files, int? numberList, InputModel inputData)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
@@ -49,13 +56,19 @@ namespace VPN.CreaterTom
                 }
 
                 var sheet = package.Workbook.Worksheets[(int)numberList];
+                //настройки листа
+                sheet.PrinterSettings.LeftMargin = inputData.LeftMargin / 2.54M;
+                sheet.PrinterSettings.RightMargin = inputData.RightMargin / 2.54M;
+                sheet.PrinterSettings.TopMargin = inputData.TopMargin / 2.54M;
+                sheet.PrinterSettings.BottomMargin = inputData.BottomMargin / 2.54M;
+
                 packageTom.Workbook.Worksheets.Add($"{sheet.Name}({i})", sheet);
             }
 
             return packageTom.GetAsByteArray();
         }
 
-        public static byte[] CreateTom(string[] files, string nameList)
+        public static byte[] CreateTom(string[] files, string nameList, InputModel inputData)
         {
             var packageTom = new ExcelPackage(files[0]);
             packageTom.Workbook.Worksheets.Delete(0);
@@ -71,6 +84,12 @@ namespace VPN.CreaterTom
                 }
 
                 var sheet = package.Workbook.Worksheets[nameList];
+                //настройки листа
+                sheet.PrinterSettings.LeftMargin = inputData.LeftMargin / 2.54M;
+                sheet.PrinterSettings.RightMargin = inputData.RightMargin / 2.54M;
+                sheet.PrinterSettings.TopMargin = inputData.TopMargin / 2.54M;
+                sheet.PrinterSettings.BottomMargin = inputData.BottomMargin / 2.54M;
+
                 packageTom.Workbook.Worksheets.Add($"{sheet.Name}({i})", sheet);
             }
 

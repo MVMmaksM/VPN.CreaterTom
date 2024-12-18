@@ -16,6 +16,10 @@ namespace VPN.CreaterTom.Model
         private bool rbtnAllList = true;
         private bool rbtnListName;
         private bool rbtnListNumber;
+        private decimal leftMargin = 1.8M;
+        private decimal rightMargin = 1.8M;
+        private decimal topMargin = 1.8M;
+        private decimal bottomMargin = 1.8M;
 
         public string Error => throw new NotImplementedException();
         public string this[string columnName] 
@@ -113,7 +117,47 @@ namespace VPN.CreaterTom.Model
                 nameTom = value;
                 OnPropertyChanged("NameTom");
             }
-        }      
+        }
+        
+        public decimal LeftMargin
+        {
+            get => leftMargin;
+            set 
+            {
+                leftMargin = value;
+                OnPropertyChanged("LeftMargin");
+            }
+        }
+
+        public decimal RightMargin
+        {
+            get => rightMargin;
+            set
+            {
+                rightMargin = value;
+                OnPropertyChanged("RightMargin");
+            }
+        }
+
+        public decimal TopMargin
+        {
+            get => topMargin;
+            set
+            {
+                topMargin = value;
+                OnPropertyChanged("TopMargin");
+            }
+        }
+
+        public decimal BottomMargin
+        {
+            get => bottomMargin;
+            set
+            {
+                bottomMargin = value;
+                OnPropertyChanged("BottomMargin");
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")

@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:VPN.CreaterTom"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="500" ResizeMode="NoResize" Loaded="Window_Loaded" Closed="Window_Closed" WindowStartupLocation="CenterScreen"> 
+        Title="MainWindow" Height="450" Width="500" ResizeMode="NoResize" Loaded="Window_Loaded" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
 
-    <Grid UseLayoutRounding="True" Background="AliceBlue">        
-        <Menu Background="#086499" VerticalAlignment="Top" Foreground="AliceBlue" Height="25">          
+    <Grid UseLayoutRounding="True" Background="AliceBlue">
+        <Menu Background="#086499" VerticalAlignment="Top" Foreground="AliceBlue" Height="25">
             <MenuItem Header="Log" Height="25">
                 <MenuItem Header="Открыть директорию" Click="MenuOpenLogFolder" Background="#086499" Foreground="AliceBlue"/>
                 <MenuItem Header="Открыть текущий лог" Click="MenuOpenLogFile" Background="#086499" Foreground="AliceBlue"/>
@@ -19,7 +20,7 @@
         </Menu>
         <GroupBox Header="Копировать:" FontFamily="Arial" VerticalAlignment="Top" Height="83" Width="221" Margin="10,30,0,0" HorizontalAlignment="Left" BorderBrush="#086499">
             <Grid x:Name="GridCopy" Margin="0,0,-2,0">
-                <TextBox x:Name="TxtListNumber" Height="18" Margin="107,19,2,23" VerticalContentAlignment="Center" IsEnabled="False" BorderBrush="#086499">
+                <TextBox x:Name="TxtListNumber" Height="18" Margin="108,15,1,29" VerticalContentAlignment="Center" IsEnabled="False" BorderBrush="#086499">
                     <TextBox.Text>
                         <Binding Path="ListNumber">
                             <Binding.ValidationRules>
@@ -28,7 +29,7 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBox x:Name="TxtListName" Height="18" Margin="107,37,2,5" VerticalContentAlignment="Center" IsEnabled="False" BorderBrush="#086499">
+                <TextBox x:Name="TxtListName" Height="18" Margin="108,33,1,11" VerticalContentAlignment="Center" IsEnabled="False" BorderBrush="#086499">
                     <TextBox.Text>
                         <Binding Path="ListName">
                             <Binding.ValidationRules>
@@ -62,7 +63,29 @@
                 <DropShadowEffect Color="Black" Direction="290" ShadowDepth="3" Opacity="0.6"/>
             </Button.Effect>
         </Button>
-        <TextBox FontFamily="Arial" x:Name="TxtBlockShow" Margin="10,128,10,30" IsReadOnly="True" Background="White" BorderBrush="#086499" TextWrapping="WrapWithOverflow"/>
+        <TextBox FontFamily="Arial" x:Name="TxtBlockShow" Margin="10,217,10,30" IsReadOnly="True" Background="White" BorderBrush="#086499" VerticalScrollBarVisibility="Auto" TextWrapping="WrapWithOverflow"/>
         <StatusBar VerticalAlignment="Bottom" Height="25" Background="#086499"/>
+        <GroupBox Header="Настройки листа" FontFamily="Arial" Margin="10,118,10,0" BorderBrush="#086499" Height="94" VerticalAlignment="Top">
+            <Grid>
+                <Label Content="Поля:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="41"/>
+                <Label Content="левое:" HorizontalAlignment="Left" Margin="0,20,0,0" VerticalAlignment="Top" Width="53"/>
+                <xctk:DecimalUpDown x:Name="UpDownFieldLeftMargin"  Height="20" Value="{Binding Path=LeftMargin}" FormatString="C1" Minimum="0" Increment=".1" 
+                                    Maximum="15" Width="42" Margin="49,22,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <Label Content="см" HorizontalAlignment="Left" Margin="87,20,0,0" VerticalAlignment="Top" Width="28"/>
+                <Label Content="правое:" HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Width="53"/>
+                <xctk:DecimalUpDown x:Name="UpDownFieldRightMargin" Height="20" Value="{Binding Path=RightMargin}" FormatString="C1" Minimum="0" Increment=".1" 
+                                    Maximum="15" Width="42" Margin="49,46,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <Label Content="см" HorizontalAlignment="Left" Margin="87,42,0,0" VerticalAlignment="Top" Width="27"/>
+                <Label Content="верхнее:" HorizontalAlignment="Left" Margin="127,20,0,0" VerticalAlignment="Top" Width="61"/>
+                <xctk:DecimalUpDown x:Name="UpDownFieldTopMargin" Height="20" Value="{Binding Path=TopMargin}" FormatString="C1" Minimum="0" Increment=".1" 
+                    Maximum="15" Width="42" Margin="183,22,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <Label Content="см" HorizontalAlignment="Left" Margin="223,20,0,0" VerticalAlignment="Top" Width="28"/>
+                <Label Content="нижнее:" HorizontalAlignment="Left" Margin="127,42,0,0" VerticalAlignment="Top" Width="61"/>
+                <xctk:DecimalUpDown x:Name="UpDownFieldBottomMargin" Height="20" Value="{Binding Path=BottomMargin}" FormatString="C1" Minimum="0" Increment=".1" 
+                    Maximum="15" Width="42" Margin="183,44,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <Label Content="см" HorizontalAlignment="Left" Margin="223,40,0,0" VerticalAlignment="Top" Width="26"/>
+
+            </Grid>
+        </GroupBox>
     </Grid>
 </Window>
