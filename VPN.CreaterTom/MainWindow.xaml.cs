@@ -114,6 +114,6 @@ namespace VPN.CreaterTom
         private void MenuOpenAbout(object sender, RoutedEventArgs e)
         {
             _facade.OpenAboutFile();
-        }
+        }        
     }
 }

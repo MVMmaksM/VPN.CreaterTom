@@ -5,12 +5,17 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace VPN.CreaterTom.Model
 {
     public class InputModel : INotifyPropertyChanged, IDataErrorInfo
     {
+        private bool _isDelPrintArea;       
+        private string? _rangeRepeatRows = "$4:$9";
+        private bool _txtBxIsEnabledRangeRepeatRows;       
+        private bool _isPrintHeader;      
         private bool _isAddZeroTersonInNameFile;      
         private bool _isNameFileAsNameSheet;     
         private int _fitToWidth;
@@ -25,6 +30,7 @@ namespace VPN.CreaterTom.Model
         private decimal rightMargin = 1.8M;
         private decimal topMargin = 2.0M;
         private decimal bottomMargin = 2.0M;
+        private ExcelSheetOrientation _selectedValueOrientation;
         private List<ExcelSheetOrientation> _listOrientation = new List<ExcelSheetOrientation>()
         {
             new ExcelSheetOrientation()
@@ -38,7 +44,51 @@ namespace VPN.CreaterTom.Model
                 orientation = eOrientation.Landscape
             }
         };
-        private ExcelSheetOrientation _selectedValueOrientation;
+
+        /// <summary>
+        /// убрать области печати
+        /// </summary>
+        public bool IsDelPrintArea
+        {
+            get => _isDelPrintArea;
+            set => _isDelPrintArea = value;
+        }
+
+        /// <summary>
+        /// тестовое поле диапазога сквозных строк
+        /// </summary>
+        public string? RangeRepeatRows
+        {
+            get => _rangeRepeatRows;
+            set => _rangeRepeatRows = value;
+        }
+
+        /// <summary>
+        /// устаналивает свойство IsEnabled для текствого поля
+        /// диапазона строк при печати заголовков
+        /// </summary>
+        public bool TxtBxIsEnabledRangeRepeatRows
+        {
+            get { return _txtBxIsEnabledRangeRepeatRows; }
+            set
+            {
+                _txtBxIsEnabledRangeRepeatRows = value;
+            }
+        }
+
+        /// <summary>
+        /// галочка печатать заголовки
+        /// </summary>
+        public bool IsPrintHeader
+        {
+            get => _isPrintHeader;
+            set
+            {
+                _isPrintHeader = value;
+                _txtBxIsEnabledRangeRepeatRows = value;
+                OnPropertyChanged("TxtBxIsEnabledRangeRepeatRows");
+            }
+        }
 
         public ExcelSheetOrientation SelectedValueOrientation
         {
@@ -54,6 +104,35 @@ namespace VPN.CreaterTom.Model
             get 
             {
                 string error = string.Empty;
+
+                switch (columnName)
+                {
+                    case "RangeRepeatRows":
+                        if (string.IsNullOrWhiteSpace(RangeRepeatRows))
+                            error = "Диапазон должен быть заполнен";
+                       
+                        if(!Regex.IsMatch(RangeRepeatRows, @"\$\d\:\$\d"))
+                            error = "Строка диапазона должна быть в формате $1:$1";
+
+                        if (!RangeRepeatRows.StartsWith("$"))
+                            error = "Строка диапазона должна быть в формате $1:$1";
+                        
+                        if(RangeRepeatRows.StartsWith("$") && RangeRepeatRows[1] == 0)
+                            error = "Диапазон не может начинаться с 0";
+
+                        var splitStr = RangeRepeatRows.Split(":");
+                        
+                        var lastValue = splitStr[1]
+                            .Split("$")
+                            .Where(s => s != "")
+                            .ToArray();
+
+                        if (lastValue[0] == "0")
+                            error = "Диапазон не может заканчиваться 0";
+                        break;
+                    default:
+                        break;
+                }
 
                 switch (columnName)
                 {

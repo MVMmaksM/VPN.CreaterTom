@@ -25,19 +25,8 @@ namespace VPN.CreaterTom
 
                 for (int j = 0; j < package.Workbook.Worksheets.Count; j++)
                 {
-                    //настройки листа
-                    //поля
-                    package.Workbook.Worksheets[j].PrinterSettings.LeftMargin = inputData.LeftMargin / 2.54M;
-                    package.Workbook.Worksheets[j].PrinterSettings.RightMargin = inputData.RightMargin / 2.54M;
-                    package.Workbook.Worksheets[j].PrinterSettings.TopMargin = inputData.TopMargin / 2.54M;
-                    package.Workbook.Worksheets[j].PrinterSettings.BottomMargin = inputData.BottomMargin / 2.54M;
-                    //ориентация
-                    package.Workbook.Worksheets[j].PrinterSettings.Orientation = inputData.SelectedValueOrientation.orientation;
-                    //вписать в кол-во страниц
-                    package.Workbook.Worksheets[j].PrinterSettings.FitToPage = true;
-                    package.Workbook.Worksheets[j].PrinterSettings.FitToWidth = inputData.FitToWidth;
-                    package.Workbook.Worksheets[j].PrinterSettings.FitToHeight = inputData.FitToHeight;
-                    //добавляем лист в книгу
+                    //устанавливаем настройки листа
+                    SetSettingsSheet(package.Workbook.Worksheets[j], inputData);                    
                  
                     if (inputData.IsNameFileAsNameSheet)
                     {
@@ -89,18 +78,9 @@ namespace VPN.CreaterTom
                 }
 
                 var sheet = package.Workbook.Worksheets[(int)numberList];
-                //настройки листа
-                //поля
-                sheet.PrinterSettings.LeftMargin = inputData.LeftMargin / 2.54M;
-                sheet.PrinterSettings.RightMargin = inputData.RightMargin / 2.54M;
-                sheet.PrinterSettings.TopMargin = inputData.TopMargin / 2.54M;
-                sheet.PrinterSettings.BottomMargin = inputData.BottomMargin / 2.54M;
-                //ориентация
-                sheet.PrinterSettings.Orientation = inputData.SelectedValueOrientation.orientation;
-                //вписать в кол-во страниц
-                sheet.PrinterSettings.FitToPage = true;
-                sheet.PrinterSettings.FitToWidth = inputData.FitToWidth;
-                sheet.PrinterSettings.FitToHeight = inputData.FitToHeight;
+
+                //устанавливаем настройки листа
+                SetSettingsSheet(sheet, inputData);              
 
                 //если используется название файла в названии листа
                 if (inputData.IsNameFileAsNameSheet)
@@ -144,18 +124,9 @@ namespace VPN.CreaterTom
                 }
 
                 var sheet = package.Workbook.Worksheets[nameList];
-                //настройки листа
-                //поля
-                sheet.PrinterSettings.LeftMargin = inputData.LeftMargin / 2.54M;
-                sheet.PrinterSettings.RightMargin = inputData.RightMargin / 2.54M;
-                sheet.PrinterSettings.TopMargin = inputData.TopMargin / 2.54M;
-                sheet.PrinterSettings.BottomMargin = inputData.BottomMargin / 2.54M;
-                //ориентация
-                sheet.PrinterSettings.Orientation = inputData.SelectedValueOrientation.orientation;
-                //вписать в кол-во страниц
-                sheet.PrinterSettings.FitToPage = true;
-                sheet.PrinterSettings.FitToWidth = inputData.FitToWidth;
-                sheet.PrinterSettings.FitToHeight = inputData.FitToHeight;
+
+                //устанавливаем настройки листа
+                SetSettingsSheet(sheet, inputData);
 
                 //если используется название файла в названии листа
                 if (inputData.IsNameFileAsNameSheet)
@@ -183,6 +154,35 @@ namespace VPN.CreaterTom
             return packageTom.GetAsByteArray();
         }
 
+        /// <summary>
+        /// устанавливает настройки листа
+        /// </summary>
+        private static void SetSettingsSheet(ExcelWorksheet sheet, InputModel inputData) 
+        {
+            //убрать области печати
+            if(inputData.IsDelPrintArea)
+                sheet.PrinterSettings.PrintArea = null;
+
+            //сквозные строки
+            if (inputData.IsPrintHeader)
+                sheet.PrinterSettings.RepeatRows = new ExcelAddress(inputData.RangeRepeatRows);
+            
+            //поля
+            sheet.PrinterSettings.LeftMargin = inputData.LeftMargin / 2.54M;
+            sheet.PrinterSettings.RightMargin = inputData.RightMargin / 2.54M;
+            sheet.PrinterSettings.TopMargin = inputData.TopMargin / 2.54M;
+            sheet.PrinterSettings.BottomMargin = inputData.BottomMargin / 2.54M;
+            //ориентация
+            sheet.PrinterSettings.Orientation = inputData.SelectedValueOrientation.orientation;
+            //вписать в кол-во страниц
+            sheet.PrinterSettings.FitToPage = true;
+            sheet.PrinterSettings.FitToWidth = inputData.FitToWidth;
+            sheet.PrinterSettings.FitToHeight = inputData.FitToHeight;
+        }
+
+        /// <summary>
+        /// удаление всех листов из книги
+        /// </summary>
         private static void DeleteAllLists(ExcelPackage package)
         {
             if (package.Workbook.Worksheets.ElementAtOrDefault(0) is not null)
@@ -192,6 +192,46 @@ namespace VPN.CreaterTom
                     package.Workbook.Worksheets.Delete(0);
                 }
             }
+        }
+
+        /// <summary>
+        /// удаляет столбцы, где все строки содержат прочерк 
+        /// в таблицах по населению
+        /// </summary>     
+        private static void DeleteColumnsContainsHyphen(ExcelWorksheet sheet) 
+        {
+            const int indexColumnStartTable = 6;
+            const int indexRowStartTable = 10;
+            var countRows = sheet.Dimension.End.Row;
+            var countColumns = sheet.Dimension.End.Row;
+            var indexRowsContainsHyphen = new List<int>();
+
+            for (int row = 1; row <= countRows; row++)
+            {
+                var flagContains = 0;
+
+                for (int col = 1; col <= countColumns; col++)
+                {
+                    if (sheet.Cells[row, col].Value?.ToString() != "-")
+                    {
+                        flagContains = 0;
+                        break;
+                    }
+
+                    flagContains = 1;
+                }
+
+                if (flagContains == 1)
+                    indexRowsContainsHyphen.Add(row);
+            }
+
+            if (indexRowsContainsHyphen.Count > 0) 
+            {
+                for (int i = 0; i < indexRowsContainsHyphen.Count; i++)
+                {
+                    sheet.DeleteRow(indexRowsContainsHyphen[i] - i);
+                }
+            }           
         }
     }
 }

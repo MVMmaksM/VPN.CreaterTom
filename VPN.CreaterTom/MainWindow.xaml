@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:VPN.CreaterTom"
         mc:Ignorable="d"
-        Title="MainWindow" Height="645" Width="682" ResizeMode="NoResize" Loaded="Window_Loaded" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
+        Title="MainWindow" Height="710" Width="820" ResizeMode="NoResize" Loaded="Window_Loaded" Closed="Window_Closed" WindowStartupLocation="CenterScreen">
 
     <Grid UseLayoutRounding="True" Background="AliceBlue">
         <Menu Background="#086499" VerticalAlignment="Top" Foreground="AliceBlue" Height="25">
@@ -38,9 +38,9 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <RadioButton x:Name="RbtnAllList" IsChecked="{Binding Path=RbtnAllList}"  Content="все листы" Margin="0,0,121,42" Height="18" Checked="RdBtnAllList_Checked"/>
-                <RadioButton IsChecked="{Binding Path=RbtnListNumber}" Content="лист номер:" Margin="0,19,121,23" Height="18" Checked="RdBtnListNumber_Checked"/>
-                <RadioButton IsChecked="{Binding Path=RbtnListName}" Content="лист с именем:" Margin="0,37,108,5" Height="18" Checked="RdBtnListName_Checked"/>
+                <RadioButton x:Name="RbtnAllList" IsChecked="{Binding Path=RbtnAllList}"  Content="все листы" Margin="0,1,155,43" Height="18" Checked="RdBtnAllList_Checked"/>
+                <RadioButton IsChecked="{Binding Path=RbtnListNumber}" Content="лист номер:" Margin="0,20,155,24" Height="18" Checked="RdBtnListNumber_Checked"/>
+                <RadioButton IsChecked="{Binding Path=RbtnListName}" Content="лист с именем:" Margin="0,38,150,6" Height="18" Checked="RdBtnListName_Checked"/>
             </Grid>
         </GroupBox>
         <Label Content="Введите название тома:" FontFamily="Arial" VerticalAlignment="Top" Height="25" Margin="297,30,10,0"/>
@@ -95,9 +95,24 @@
                      Maximum="50" Width="42" Margin="455,46,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
                 <Label Content="стр. в высоту" HorizontalAlignment="Left" Margin="502,44,0,0" VerticalAlignment="Top" Width="91"/>
                 <CheckBox x:Name="IsNameFileAsNameSheet" IsChecked="{Binding Path=IsNameFileAsNameSheet}" 
-                          Content="использовать терсон из название файла как название листа" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top"/>
+                          Content="использовать терсон из названия файла как название листа" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top"/>
                 <CheckBox x:Name="IsAddZeroTersonInNameFile" IsChecked="{Binding Path=IsAddZeroTersonInNameFile}" Content="добавить недостающие нули в терсон имен файлов" HorizontalAlignment="Left" Margin="10,103,0,0" 
                           VerticalAlignment="Top"/>
+                <CheckBox x:Name="IsPrintHeader" IsChecked="{Binding Path=IsPrintHeader}" Content="печатать заголовки" Margin="634,6,0,0" 
+                          VerticalAlignment="Top" HorizontalAlignment="Left" Width="131"/>
+                <Label Content="сквозные строки:" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Margin="634,22,0,0" VerticalAlignment="Top" Width="131"/>
+                <TextBox HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="634,43,0,0" Height="20" TextWrapping="Wrap" 
+                         IsEnabled="{Binding Path=TxtBxIsEnabledRangeRepeatRows}" VerticalAlignment="Top" Width="131">
+                    <TextBox.Text>
+                        <Binding Path="RangeRepeatRows">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <CheckBox x:Name="IsDelPrintArea" IsChecked="{Binding Path=IsDelPrintArea}" Content="убрать области печати" Margin="383,83,0,0" 
+                        VerticalAlignment="Top" HorizontalAlignment="Left" Width="154"/>
             </Grid>
         </GroupBox>
     </Grid>
