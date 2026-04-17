@@ -99,6 +99,15 @@ namespace VPN.CreaterTom
         {
             try
             {
+                OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] проверка существования тома с именем \"{_inputData.NameTom}\" в {_setting.PathSaveFile}");
+
+                if (File.Exists(Path.Combine(_setting.PathSaveFile, _inputData.NameTom + ".xlsx"))) 
+                {
+                    var messageExistTom = $"Файл тома с именем: \"{_inputData.NameTom}\" уже существует. Перезаписать?";
+                    if (_message.ShowQuestion(messageExistTom) == System.Windows.MessageBoxResult.Cancel)
+                        return;
+                }
+
                 OnHandlerInfoShow?.Invoke($"\n[{DateTime.Now.ToShortTimeString()}] получение файлов из {_setting.PathLoadFile}");
                 _logger.Info($"Получение файлов из {_setting.PathLoadFile}");
 
